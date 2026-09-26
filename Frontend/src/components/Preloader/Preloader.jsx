@@ -2,7 +2,7 @@ import './Preloader.css';
 
 function Preloader({ onContinue, onCancel }) {
   return (
-    <div className="preloader-overlay">
+    <div className="preloader-overlay" onClick={onContinue}>
       <div className="preloader-spinner">
         {Array.from({ length: 12 }).map((_, i) => (
           <div
@@ -16,11 +16,25 @@ function Preloader({ onContinue, onCancel }) {
         ))}
       </div>
       <p className="preloader-text">Loading... Please wait.</p>
-      <div className="preloader-buttons">
-        <button type="button" className="preloader-btn preloader-cancel" onClick={onCancel}>
+      <div className="preloader-buttons" onClick={(event) => event.stopPropagation()}>
+        <button
+          type="button"
+          className="preloader-btn preloader-cancel"
+          onClick={(event) => {
+            event.stopPropagation();
+            onCancel?.();
+          }}
+        >
           Cancel
         </button>
-        <button type="button" className="preloader-btn preloader-continue" onClick={onContinue}>
+        <button
+          type="button"
+          className="preloader-btn preloader-continue"
+          onClick={(event) => {
+            event.stopPropagation();
+            onContinue?.();
+          }}
+        >
           Continue
         </button>
       </div>
